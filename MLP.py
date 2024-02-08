@@ -62,6 +62,7 @@ class MLP():
         activations_list = self.activations_list
         derivative_act = derivative_activations()
         
+        deltas = []
         for i in reversed(range(len(self.weights))):
             if activations[i] == 'None':
                 f_der_act = 1
@@ -74,11 +75,11 @@ class MLP():
             m = np.array(forward_results[i])
             delta = delta.reshape(delta.shape[0],1)
             m = m.reshape(m.shape[0],1)
+            deltas.append(delta)
             vals_derivatives[i] = np.dot(m, delta.T)
-            error = self.weights[i] @ delta
-        self.derivatives = vals_derivatives
+            error = self.weights[i] @ delta 
 
-        return 0
+        return vals_derivatives, deltas
     
 X = np.array([2,1,3])
 activations = ['sigmoid', 'None']
@@ -91,5 +92,4 @@ mlp = MLP(n_layers = n_layers,
           initialization = 'Xe')
 
 forward_results = mlp.forward(X)
-backprop_test = mlp.backward([0.5,0.5])
-
+backprop_derivatives, backprop_deltas = mlp.backward([0.5,0.5])
