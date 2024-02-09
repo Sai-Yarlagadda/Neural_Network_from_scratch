@@ -44,6 +44,6 @@ class derivative_activations():
     def tanh(self, X):
         z1, z2 = np.exp(X), np.exp(-1*X)
         function_val = (z1 - z2)/(z1 + z2)
-        derivative = 1 - np.square(function_val, 2)
+        derivative = 1 - np.square(function_val)
         
         return derivative
